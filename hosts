@@ -1,2 +1,2 @@
 [k8s]
-k8s_master_node anisble_hosts=10.10.1.149 ansible_user=ubuntu
+k8s_master_node ansible_host=10.10.1.149 ansible_user=ubuntu
