@@ -64,7 +64,7 @@ pipeline {
             script {
                 sh '''
                     echo "\$ANSIBLE_VAULT_PASSWORD" > vault-passwd.txt
-                    ansible-paybook ansible-deployment.yaml --vault-password-file vault-passwd.txt
+                    ansible-paybook ansible-docker-deployment.yaml --vault-password-file vault-passwd.txt
                 '''
                 //sh 'ansible-playbook ansible-deployment.yaml --vault-password-file vault-passwd.txt'
             }
