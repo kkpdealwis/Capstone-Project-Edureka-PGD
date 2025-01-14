@@ -2,14 +2,13 @@
 - name: Deploy xyz-application to k8s cluster
   hosts: k8s
   become: true
+  become_method: sudo
+  remote_user: ubuntu
   tasks:
-  - name: deploy xyz-application to k8s cluster
-    k8s:
-      state: present
-      src: deployment.yaml
-  - name: create service for xyz-application
-    k8s:
-      state: present
-      src: service.yaml
-      
+  - name: copy deployment.yaml file to target machine
+    copy:
+      src: deployment
+      dest: /tmp/deployment.yaml
+  - name: Apply deployment.yaml
+    command: kubectl apply -f /tmp/deployment.yaml
       
