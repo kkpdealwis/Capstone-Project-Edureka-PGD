@@ -9,6 +9,8 @@
     copy:
       src: deployment.yaml
       dest: /tmp/deployment.yaml
+      owner: ubuntu
+      group: ubuntu
       force: yes
   - name: Apply deployment.yaml
     command: kubectl apply -f /tmp/deployment.yaml --validate=false
