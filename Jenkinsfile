@@ -61,7 +61,6 @@ pipeline {
         steps {
             script {
                 sh '''
-                    sed 's/\${BUILD_NUMBER}/${BUILD_NUMBER}/g' deployment.yaml > deployment.yaml
                     ansible-playbook ansible-k8s-deployment.yaml
                 '''
             }
