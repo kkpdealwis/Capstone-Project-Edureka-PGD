@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: xyz-application-service-container
-          image: kkpdealwis93/xyz-repo-application:22
+          image: kkpdealwis93/xyz-repo-application:${BUILD_NUMBER}
           ports:
             - containerPort: 8080
         - name: node-exporter

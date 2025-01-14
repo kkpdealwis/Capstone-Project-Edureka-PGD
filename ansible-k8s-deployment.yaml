@@ -9,6 +9,7 @@
     copy:
       src: deployment.yaml
       dest: /tmp/deployment.yaml
+      force: yes
   - name: Apply deployment.yaml
     command: kubectl apply -f /tmp/deployment.yaml
       
