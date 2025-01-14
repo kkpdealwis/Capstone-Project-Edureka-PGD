@@ -6,7 +6,7 @@
   - name: copy deployment.yaml file to target machine
     copy:
       src: deployment.yaml
-      dest: /home/deployment-xyz-application.yaml
+      dest: /home/ubuntu/deployment-xyz-application.yaml
       owner: ubuntu
       group: ubuntu
       force: yes
