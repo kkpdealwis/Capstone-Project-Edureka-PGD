@@ -1,14 +1,12 @@
 ---
 - name: Deploy xyz-application to k8s cluster
   hosts: k8s
-  become: true
-  become_method: sudo
   remote_user: ubuntu
   tasks:
   - name: copy deployment.yaml file to target machine
     copy:
       src: deployment.yaml
-      dest: /tmp/deployment.yaml
+      dest: /home/deployment-xyz-application.yaml
       owner: ubuntu
       group: ubuntu
       force: yes
