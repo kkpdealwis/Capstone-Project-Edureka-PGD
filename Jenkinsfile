@@ -61,6 +61,8 @@ pipeline {
         steps {
             script {
                 sh '''
+                    awk -v buildnumber=$BUILD_NUMBER '{gsub(/BUILD_NUMBER/, buildnumber)}1' deployment.yaml > deployment.temp.yaml
+                    mv deployment.temp.yaml deployment.yaml
                     ansible-playbook ansible-k8s-deployment.yaml
                 '''
             }
