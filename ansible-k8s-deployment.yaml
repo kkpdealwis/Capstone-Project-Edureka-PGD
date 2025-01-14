@@ -1,0 +1,15 @@
+---
+- name: Deploy xyz-application to k8s cluster
+  hosts: k8s
+  become: true
+  tasks:
+  - name: deploy xyz-application to k8s cluster
+    k8s:
+      state: present
+      src: deployment.yaml
+  - name: create service for xyz-application
+    k8s:
+      state: present
+      src: service.yaml
+      
+      
