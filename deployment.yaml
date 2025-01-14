@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xyz-application-deployment
+  labels:
+    app: xyz-service
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: xyz-service
+  template:
+    metadata:
+      labels:
+        app: xyz-service
+    spec:
+      containers:
+      - name: xyz-application-service-container
+        image: kkpdealwis93/xyz-repo-application:${BUILD_NUMBER}
+        ports:
+        - containerPort: 8080
