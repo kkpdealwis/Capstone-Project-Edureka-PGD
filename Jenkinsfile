@@ -11,19 +11,6 @@ pipeline {
   }
   
   stages {
-    stage('clone repository') {
-        steps {
-            script {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/master']],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/kkpdealwis/Capstone-Project-Edureka-PGD.git',
-                    ]]
-                ])
-            }
-        }
-    }
     stage('check ansible') {
         steps {
             script {
