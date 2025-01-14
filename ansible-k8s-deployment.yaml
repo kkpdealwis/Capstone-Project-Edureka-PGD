@@ -7,7 +7,7 @@
   tasks:
   - name: copy deployment.yaml file to target machine
     copy:
-      src: deployment
+      src: deployment.yaml
       dest: /tmp/deployment.yaml
   - name: Apply deployment.yaml
     command: kubectl apply -f /tmp/deployment.yaml
