@@ -3,13 +3,92 @@
   hosts: k8s
   remote_user: ubuntu
   tasks:
-  - name: copy deployment.yaml file to target machine
+  - name: copy deployment.yaml file to k8s master node
     copy:
       src: deployment.yaml
       dest: /home/ubuntu/deployment-xyz-application.yaml
       owner: ubuntu
       group: ubuntu
       force: yes
-  - name: Apply deployment.yaml
-    command: kubectl apply -f /tmp/deployment.yaml
+  - name: apply deployment.yaml
+    command: kubectl apply -f /home/ubuntu/deployment-xyz-application.yaml
+  - name: Copy service.yaml file to target machine
+    copy:
+      src: service.yaml
+      destination: /home/ubuntu/service-xyz-application.yaml
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+  - name: check namespace monitoring
+    command: kubectl get namespace monitoring -o custom-columns=NAME:.metadata.name --no-headers
+    register: namespace_check
+    ignore_errors: yes
+  - name: create namespace monitoring
+    command: kubectl create namespace monitroing
+    when: namespace_check.rc != 0
+  - name: check cluster role prometheus
+    command: kubectl get clusterrole prometheus -o custom-columns=NAME:.metadata.name --no-headers
+    register: cluster_role_check
+    ignore_errors: yes
+  - name: copy clusterRole.yaml file to k8s master node
+    copy: 
+      src: clusterRole.yaml
+      dest: /home/ubuntu/clusterRole.yaml
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+    when: cluster_role_check.rc != 0
+  - name: create clusterRole in k8s master node
+    command: kubectl create -f /home/ubuntu/clusterRole.yaml
+    when: cluster_role_check.rc != 0
+  - name: copy prometheus config map to k8s master node
+    copy:
+      src: config-map.yaml
+      dest: /home/ubuntu/config-map-promethues.yaml
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+  - name: create prometheus configmap on monitoring namespace
+    command: kubectl apply -f /home/ubuntu/config-map-promethues.yaml
+  - name: copy prometheus deployment
+    copy:
+      src: prometheus-deployment.yaml
+      dest: /home/ubuntu/prometheus-deployment.yaml
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+  - name: apply prometheus deployment
+    command: kubectl apply -f /home/ubuntu/prometheus-deployment.yaml --namepsace=monitoring
+  - name: copy prometheus-service.yaml
+    copy:
+      src: prometheus-service.yaml
+      dest: /home/ubuntu/prometheus-service.yaml
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+  - name: apply prometheus service
+    command: kubectl apply -f prometheus-service.yaml --namespace=monitoring
+  - name: copy /home/ubuntu/grafana-datasource-config.yaml
+    copy:
+      src: grafana-datasource-config.yaml
+      dest: /home/ubuntu/grafana-datasource-config.yaml --namespace=monitoring
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+  - name: copy grafana-service.yaml
+    copy:
+      src: grafana-service.yaml
+      dest: /home/ubuntu/grafana-service.yaml
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+  - name: apply grafana-service.yaml
+    command: kubectl apply -f /home/ubuntu/grafana-service.yaml --namespace=monitoring
+    
+    
+    
+      
+    
+    
+    
       
