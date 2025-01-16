@@ -58,7 +58,7 @@
       group: ubuntu
       force: yes
   - name: apply prometheus deployment
-    command: kubectl apply -f /home/ubuntu/prometheus-deployment.yaml --namepsace=monitoring
+    command: kubectl apply -f /home/ubuntu/prometheus-deployment.yaml --namespace=monitoring
   - name: copy prometheus-service.yaml
     copy:
       src: prometheus-service.yaml
