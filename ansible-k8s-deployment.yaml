@@ -75,6 +75,15 @@
       owner: ubuntu
       group: ubuntu
       force: yes
+  - name: copy grafana-deployment.yaml
+    copy:
+      src: grafana-deployment.yaml
+      dest: /home/ubuntu/grafana-deployment.yaml
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+  - name: apply grafana deployment.yaml
+    command: kubectl apply -f /home/ubuntu/grafana-deployment.yaml --namespace=monitoring
   - name: copy grafana-service.yaml
     copy:
       src: grafana-service.yaml
