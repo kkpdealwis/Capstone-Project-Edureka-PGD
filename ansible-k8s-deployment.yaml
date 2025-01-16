@@ -15,7 +15,7 @@
   - name: Copy service.yaml file to target machine
     copy:
       src: service.yaml
-      destination: /home/ubuntu/service-xyz-application.yaml
+      dest: /home/ubuntu/service-xyz-application.yaml
       owner: ubuntu
       group: ubuntu
       force: yes
