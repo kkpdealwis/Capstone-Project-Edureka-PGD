@@ -75,6 +75,8 @@
       owner: ubuntu
       group: ubuntu
       force: yes
+  - name: apply grafana-datasource-config.yaml
+    command: kubectl apply -f /home/ubuntu/grafana-datasource-config.yaml --namespace=monitoring
   - name: copy grafana-deployment.yaml
     copy:
       src: grafana-deployment.yaml
