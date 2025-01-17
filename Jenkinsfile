@@ -63,7 +63,7 @@ pipeline {
                 sh '''
                     awk -v workspace="${WORKSPACE}" '{gsub(/WORKSPACE/, workspace); print}' ansible.cfg > ansible.temp.cfg
                     mv ansible.temp.cfg ansible.cfg
-                    awk -v buildnumber=$BUILD_NUMBER '{gsub(/BUILD_NUMBER/, buildnumber)}' deployment.yaml > deployment.temp.yaml
+                    awk -v buildnumber=$BUILD_NUMBER '{gsub(/BUILD_NUMBER/, buildnumber); print}' deployment.yaml > deployment.temp.yaml
                     mv deployment.temp.yaml deployment.yaml
                     ansible-playbook ansible-k8s-deployment.yaml
                 '''
