@@ -32,7 +32,6 @@ spec:
             - "--containerd=/run/containerd/containerd.sock" # Path to containerd runtime
             - "--docker_only=false"
             - "--enable_metrics=cpu,memory" # Collect only CPU and memory metrics
-            - "--whitelisted_containers=xyz-application-service-container" # Monitor only the application container
           volumeMounts:
             - name: containerd
               mountPath: /run/containerd/containerd.sock
