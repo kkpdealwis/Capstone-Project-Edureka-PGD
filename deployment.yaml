@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: xyz-application-service-container
-          image: kkpdealwis93/xyz-repo-application:BUILD_NUMBER
+          image: kkpdealwis93/xyz-repo-application:<ACTUAL_BUILD_NUMBER>
           ports:
             - containerPort: 8080
         - name: cadvisor
@@ -37,3 +37,9 @@ spec:
             - name: containerd
               mountPath: /run/containerd/containerd.sock
               readOnly: true
+      volumes:
+        - name: containerd
+          hostPath:
+            path: /run/containerd/containerd.sock
+            type: Socket
+
