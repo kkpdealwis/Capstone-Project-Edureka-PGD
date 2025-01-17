@@ -16,31 +16,24 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/metrics"
-        prometheus.io/port: "9100"
+        prometheus.io/port: "8081"
     spec:
       containers:
         - name: xyz-application-service-container
           image: kkpdealwis93/xyz-repo-application:BUILD_NUMBER
           ports:
             - containerPort: 8080
-        - name: node-exporter
-          image: quay.io/prometheus/node-exporter:latest
+        - name: cadvisor
+          image: gcr.io/cadvisor/cadvisor:latest
           ports:
-            - containerPort: 9100
+            - containerPort: 8081
           args:
-            - "--path.procfs=/host/proc"
-            - "--path.sysfs=/host/sys"
+            - "--port=8081" # Set cAdvisor to listen on port 8081
+            - "--containerd=/run/containerd/containerd.sock" # Path to containerd runtime
+            - "--docker_only=false"
+            - "--enable_metrics=cpu,memory" # Collect only CPU and memory metrics
+            - "--whitelisted_containers=xyz-application-service-container" # Monitor only the application container
           volumeMounts:
-            - name: proc
-              mountPath: /host/proc
+            - name: containerd
+              mountPath: /run/containerd/containerd.sock
               readOnly: true
-            - name: sys
-              mountPath: /host/sys
-              readOnly: true
-      volumes:
-        - name: proc
-          hostPath:
-            path: /proc
-        - name: sys
-          hostPath:
-            path: /sys
