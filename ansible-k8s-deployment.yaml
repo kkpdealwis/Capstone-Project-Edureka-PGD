@@ -71,7 +71,7 @@
   - name: copy /home/ubuntu/grafana-datasource-config.yaml
     copy:
       src: grafana-datasource-config.yaml
-      dest: /home/ubuntu/grafana-datasource-config.yaml --namespace=monitoring
+      dest: /home/ubuntu/grafana-datasource-config.yaml
       owner: ubuntu
       group: ubuntu
       force: yes
