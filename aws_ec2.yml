@@ -3,3 +3,4 @@ regions:
   - us-east-1
 exclude_filters:
   - "tag:Name": "JENKINS-SERVER-INSTANCE"
+  - "tag:Name": "K8S-WORKER-NODE-INSTANCE"
