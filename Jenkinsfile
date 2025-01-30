@@ -74,6 +74,8 @@ pipeline {
         steps {
             script {
                 sh '''
+                    pipx inject ansible boto3 botocore
+                    pipx list
                     # awk -v workspace="${WORKSPACE}" '{gsub(/WORKSPACE/, workspace); print}' ansible.cfg > ansible.temp.cfg
                     # mv ansible.temp.cfg ansible.cfg
                     awk -v buildnumber=$BUILD_NUMBER '{gsub(/BUILD_NUMBER/, buildnumber)}1' deployment.yaml > deployment.temp.yaml
