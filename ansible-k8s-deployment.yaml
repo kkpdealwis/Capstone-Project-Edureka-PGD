@@ -24,7 +24,7 @@
     register: namespace_check
     ignore_errors: yes
   - name: create namespace monitoring
-    command: kubectl create namespace monitroing
+    command: kubectl create namespace monitoring
     when: namespace_check.rc != 0
   - name: check cluster role prometheus
     command: kubectl get clusterrole prometheus -o custom-columns=NAME:.metadata.name --no-headers
