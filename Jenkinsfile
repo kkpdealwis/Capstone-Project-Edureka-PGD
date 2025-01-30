@@ -54,10 +54,10 @@ pipeline {
         }
     }
     stage('push docker image to dockerhub using ansible') {
+        tools {
+          ansible 'ansible-2.18.1'
+        }
         steps {
-            tools {
-              ansible 'ansible-2.18.1'
-            }
             script {
                 sh '''
                     echo "\$ANSIBLE_VAULT_PASSWORD" > vault-passwd.txt
@@ -68,10 +68,10 @@ pipeline {
         }
     }
     stage('deploy the application to kubernetes cluster using ansible') {
+        tools {
+          ansible 'ansible-2.18.1'
+        }
         steps {
-            tools {
-              ansible 'ansible-2.18.1'
-            }
             script {
                 sh '''
                     # awk -v workspace="${WORKSPACE}" '{gsub(/WORKSPACE/, workspace); print}' ansible.cfg > ansible.temp.cfg
