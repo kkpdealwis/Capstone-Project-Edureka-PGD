@@ -15,6 +15,11 @@ spec:
       labels:
         app: prometheus-server
     spec:
+      securityContext:
+        runAsUser: 65534  # Run as 'nobody' user
+        runAsGroup: 65534 # Run as 'nobody' group
+        fsGroup: 65534    # Set filesystem group to 'nobody'
+        fsGroupChangePolicy: "OnRootMismatch" # Optimize permission changes
       containers:
         - name: prometheus
           image: prom/prometheus
