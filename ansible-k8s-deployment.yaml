@@ -1,6 +1,6 @@
 ---
 - name: Deploy xyz-application to k8s cluster
-  hosts: k8s
+  hosts: aws_ec2
   remote_user: ubuntu
   tasks:
   - name: copy deployment.yaml file to k8s master node
