@@ -14,9 +14,6 @@ spec:
       labels:
         app: grafana
     spec:
-      securityContext:
-        runAsUser: 472
-        fsGroup: 472
       containers:
       - name: grafana
         image: grafana/grafana:latest
@@ -38,9 +35,8 @@ spec:
             readOnly: false
       volumes:
         - name: grafana-storage
-          persistentVolumeClaim:
-            claimName: grafana-pvc
+          emptyDir: {}
         - name: grafana-datasources
           configMap:
-            name: grafana-datasources
-            defaultMode: 420
+              defaultMode: 420
+              name: grafana-datasources
