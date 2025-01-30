@@ -38,9 +38,9 @@ spec:
               mountPath: /prometheus/
       volumes:
         - name: prometheus-config-volume
+          persistentVolumeClaim:
+            claimName: prometheus-config-pvc
+        - name: prometheus-server-conf
           configMap:
-            defaultMode: 420
             name: prometheus-server-conf
-  
-        - name: prometheus-storage-volume
-          emptyDir: {}
+            defaultMode: 420

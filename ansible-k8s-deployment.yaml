@@ -28,6 +28,15 @@
   - name: create namespace monitoring
     command: kubectl create namespace monitoring
     when: namespace_check.rc != 0
+  - name: copy storage-class.yaml file to k8s master node
+    copy:
+      src: storage-class.yaml
+      dest: /home/ubuntu/storage-class.yaml
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+  - name: check storage class ebs-sc
+    command: kubectl apply -f /home/ubuntu/storage-class.yaml
   - name: check cluster role prometheus
     command: kubectl get clusterrole prometheus -o custom-columns=NAME:.metadata.name --no-headers
     register: cluster_role_check
@@ -52,6 +61,15 @@
       force: yes
   - name: create prometheus configmap on monitoring namespace
     command: kubectl apply -f /home/ubuntu/config-map-promethues.yaml
+  - name: copy prometheus-pvc.yaml
+    copy:
+      src: prometheus-pvc.yaml
+      dest: /home/ubuntu/prometheus-pvc.yaml
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+  - name: apply prometheus pvc
+    command: kubectl apply -f /home/ubuntu/prometheus-pvc.yaml --namespace=monitoring
   - name: copy prometheus deployment
     copy:
       src: prometheus-deployment.yaml
@@ -79,6 +97,15 @@
       force: yes
   - name: apply grafana-datasource-config.yaml
     command: kubectl apply -f /home/ubuntu/grafana-datasource-config.yaml --namespace=monitoring
+  - name: copy grafana-pvc.yaml
+    copy:
+      src: grafana-pvc.yaml
+      dest: /home/ubuntu/grafana-pvc.yaml
+      owner: ubuntu
+      group: ubuntu
+      force: yes
+  - name: apply grafana-pvc.yaml
+    command: kubectl apply -f /home/ubuntu/grafana-pvc.yaml --namespace=monitoring
   - name: copy grafana-deployment.yaml
     copy:
       src: grafana-deployment.yaml
