@@ -5,13 +5,11 @@ pipeline {
       IMAGE_NAME = 'xyz-repo-application'
       ANSIBLE_VAULT_PASSWORD = credentials('ANSIBLE_VAULT_PASSWORD')
   }
-  tools {
-    ansible 'ansible-2.18.1'
-    maven 'maven-3.9.9'
-  }
-  
   stages {
     stage('check ansible') {
+        tools {
+          ansible 'ansible-2.18.1'
+        }
         steps {
             script {
               sh 'ansible --version'
@@ -19,6 +17,9 @@ pipeline {
         }
     }
     stage('check maven') {
+        tools {
+          maven 'maven-3.9.9'
+        }
         steps {
             script {
                 sh 'mvn --version'
@@ -26,6 +27,9 @@ pipeline {
         }
     }
     stage('build maven project artifact') {
+        tools {
+          maven 'maven-3.9.9'
+        }
         steps {
             script{
                 sh 'mvn clean install'
@@ -33,7 +37,10 @@ pipeline {
         }
     }
     stage('run maven project tests') {
-        steps {
+        tools {
+          maven 'maven-3.9.9'
+        }   
+        steps {              
             script {
                 sh 'mvn test'
             }
@@ -48,6 +55,9 @@ pipeline {
     }
     stage('push docker image to dockerhub using ansible') {
         steps {
+            tools {
+              ansible 'ansible-2.18.1'
+            }
             script {
                 sh '''
                     echo "\$ANSIBLE_VAULT_PASSWORD" > vault-passwd.txt
@@ -59,6 +69,9 @@ pipeline {
     }
     stage('deploy the application to kubernetes cluster using ansible') {
         steps {
+            tools {
+              ansible 'ansible-2.18.1'
+            }
             script {
                 sh '''
                     # awk -v workspace="${WORKSPACE}" '{gsub(/WORKSPACE/, workspace); print}' ansible.cfg > ansible.temp.cfg
