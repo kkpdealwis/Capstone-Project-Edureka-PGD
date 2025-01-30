@@ -124,6 +124,8 @@
       force: yes
   - name: apply grafana-service.yaml
     command: kubectl apply -f /home/ubuntu/grafana-service.yaml --namespace=monitoring
+  - name: install nginx-ingress-controller
+    command: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/aws/deploy.yaml
   - name: copy nginx-ingress-controller.yaml
     copy:
       src: nginx-ingress.yaml
@@ -131,6 +133,8 @@
       owner: ubuntu
       group: ubuntu
       force: yes
+  - name: apply nginx-ingress-controller.yaml
+    command: kubectl apply -f /home/ubuntu/nginx-ingress.yaml
     
     
     
