@@ -10,7 +10,7 @@
       owner: ubuntu
       group: ubuntu
       force: yes
-  - name: apply deployment.yaml
+  - name: apply xyz application deployment
     command: kubectl apply -f /home/ubuntu/deployment-xyz-application.yaml
   - name: Copy service.yaml file to target machine
     copy:
@@ -19,6 +19,8 @@
       owner: ubuntu
       group: ubuntu
       force: yes
+  - name: apply xyz application service
+    command: kubectl apply -f /home/ubuntu/service-xyz-application.yaml
   - name: check namespace monitoring
     command: kubectl get namespace monitoring -o custom-columns=NAME:.metadata.name --no-headers
     register: namespace_check
